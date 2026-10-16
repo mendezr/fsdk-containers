@@ -1,7 +1,7 @@
 ---
 name: nspawn-machine-image
-version: "1.0"
-last_updated: 2026-08-20
+version: "1.1"
+last_updated: 2026-10-16
 id: nspawn-machine-image
 one_line_purpose: Build a non-distroless systemd-nspawn machine image rootfs from FSDK.
 entry_point: docs/skills/nspawn-machine-image.md
@@ -106,8 +106,9 @@ configuration and plugin junctions, so also cover `elements/gnome-build-meta.bst
 `elements/plugins/**`, `include/**`, and `patches/**`. Directory filters must
 use `/**` to match files inside patch queues. Keep the Justfile and workflow
 itself covered; unrelated image and documentation edits skip this heavy build.
-`tests/test_catalog_brew_paths.py` checks positive and negative examples in the
-existing catalog unit-test lane, without needing to build a rootfs.
+When changing the filter, smoke-test matching and non-matching paths against the
+workflow's actual patterns; do not permanently pin its configuration in tests.
+The authoritative build check remains `just verify-brew` in the selected PR run.
 GitHub's [workflow syntax](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpull_requestpull_request_targetpathspaths-ignore)
 documents PR path filtering. The job uses a native Ubuntu runner; nothing
 publishes the tarball yet. Booting
